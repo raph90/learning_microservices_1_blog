@@ -11,13 +11,13 @@ const events = [];
 app.post("/events", (req, res) => {
   // we don't know what's going to be in the body
   const event = req.body;
-
+  console.log("event received on event bus");
   events.push(event);
 
-  axios.post("http://localhost:4000/events", event); // posts
-  axios.post("http://localhost:5000/events", event); // comments
-  axios.post("http://localhost:4003/events", event); // query service
-  axios.post("http://localhost:4004/events", event); // moderation service
+  axios.post("http://posts-clusterip-srv:4000/events", event); // posts
+  axios.post("http://comments-clusterip-srv:5000/events", event); // comments
+  axios.post("http://query-clusterip-srv:4003/events", event); // query service
+  axios.post("http://moderation-clusterip-srv:4004/events", event); // moderation service
 
   res.send({ status: "OK " });
 });

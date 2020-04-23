@@ -60,7 +60,7 @@ const handleEvent = (type, data) => {
 app.listen(4003, async () => {
   console.log("Query service listening on 4003");
 
-  const res = await axios.get("http://localhost:4005/events");
+  const res = await axios.get("http://event-bus-srv:4005/events");
   for (let event of res.data) {
     console.log("processing event", event.type);
     handleEvent(event.type, event.data);

@@ -1,0 +1,58 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: raph37/learning_microservices_client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.js" # if we change a js file it will copy it into the pod
+            dest: .
+    - image: raph37/learning_microservices_comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js" # if we change a js file it will copy it into the pod
+            dest: .
+    - image: raph37/learning_microservices_event-bus
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js" # if we change a js file it will copy it into the pod
+            dest: .
+    - image: raph37/learning_microservices_moderation
+      context: moderation-service
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js" # if we change a js file it will copy it into the pod
+            dest: .
+    - image: raph37/learning_microservices_posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js" # if we change a js file it will copy it into the pod
+            dest: .
+    - image: raph37/learning_microservices_query
+      context: query-service
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js" # if we change a js file it will copy it into the pod
+            dest: .
