@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-depl
+spec:
+  replicas: 1 # we only want 1 pod
+  selector: # look at all the pods that have app: posts
+    matchLabels:
+      app: posts
+  template: # this specifies the actual pod
+    metadata:
+      labels:
+        app: posts
+    spec:
+      containers:
+        - name: posts
+          image: raph37/learning_microservices_posts:latest
